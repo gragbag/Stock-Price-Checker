@@ -15,13 +15,15 @@ const app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.use(helmet({
-  contentSecurityPolicy: {
+app.use(
+  helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"]
-    }
-  }
-}))
+      defaultSrc: ["'self'"], // Allow everything from the same origin
+      scriptSrc: ["'self'"], // Only allow scripts from your server
+      styleSrc: ["'self'"], // Only allow styles from your server
+    },
+  })
+);
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
 
